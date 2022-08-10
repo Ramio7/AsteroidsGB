@@ -1,11 +1,11 @@
 namespace RRRStudyProject.HW6
 {
-    public class Infantry : TestUnit
+    public sealed class Infantry : Unit
     {
-        public Infantry(int health)
+        public Infantry(int unitHealth)
         {
-            _unitType = "Infantry";
-            _unitHealth = health;
+            type = "Infantry";
+            health = unitHealth;
         }
     }
 }

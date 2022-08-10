@@ -6,7 +6,7 @@ namespace RRRStudyProject
 {
     public class UI : IExecute
     {
-        MainGame game = GameObject.FindObjectOfType<MainGame>();
+        readonly MainGame game = Object.FindObjectOfType<MainGame>();
 
         private readonly DamageAgent _playerDamageAgent;
         private TextMeshPro _HPTextMesh;
@@ -28,9 +28,8 @@ namespace RRRStudyProject
 
         public void Update()
         {
-            _HPScrollBar.size = _playerDamageAgent.InitializerData.Health / _playerDamageAgent.InitializerData.MaxHealth;
-            _HPTextMesh.SetText($"Health: {_playerDamageAgent.InitializerData.Health}");
-            if (_playerDamageAgent == null) game.GameUI = new UI(GameObject.FindGameObjectWithTag("Player"));
+            _HPScrollBar.size = _playerDamageAgent.currentHealth / _playerDamageAgent.maxHealth;
+            _HPTextMesh.SetText($"Health: {_playerDamageAgent.currentHealth}");
         }
     }
 }

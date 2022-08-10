@@ -6,8 +6,9 @@ namespace RRRStudyProject
     {
         readonly Camera _camera = Camera.main;
 
-        public UserInput(string inputTypeName, GameObject controlledObject) : base(inputTypeName, controlledObject)
+        public UserInput(GameObject controlledObject) : base(controlledObject)
         {
+            inputType = "UserInput";
         }
 
         public override void Update()
@@ -15,6 +16,7 @@ namespace RRRStudyProject
             moveTowards = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             lookAt = MouseWorldPosition(_camera);
             if (Input.GetMouseButton(0)) isFiring = true;
+            if (Input.GetKeyDown(KeyCode.L)) weaponLock = !weaponLock;
         }
 
         private Vector3 MouseWorldPosition(Camera screenCamera)

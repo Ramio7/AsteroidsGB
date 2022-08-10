@@ -1,61 +1,58 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace RRRStudyProject
 {
-    public class AmmunitionAgent : IEnumerable, IEnumerator
+    public class AmmunitionAgent
     {
-        List<GameObject> _ammunitionPrefabs = new List<GameObject>();
+        public Dictionary<string, GameObject> ammunitionPrefabs = new Dictionary<string, GameObject>();
+        public Dictionary<string, Ammunition> ammunitionBehaviors = new Dictionary<string, Ammunition>();
 
-        private int _index = 0;
+        public List<string> ammunitionNames = new List<string>();
 
-        public List<GameObject> AmmunitionPrefabs { get => _ammunitionPrefabs; set => _ammunitionPrefabs = value; }
+        private int index = 0;
 
-        public object Current => _ammunitionPrefabs[_index];
-        public int Length => _ammunitionPrefabs.Capacity;
-        public int Index { get => _index; set => _index = value; }
-
-        public void InitiateAmmunitionList(GameObject[] ammunitions)
+        public AmmunitionAgent(GameObject ammunitionPrefab)
         {
-            for (int i = 0; i < ammunitions.Length; i++) _ammunitionPrefabs.Add(ammunitions[i]);
+            AddAmmunition(ammunitionPrefab);
+        }
+        public AmmunitionAgent(GameObject[] ammunitionPrefabs)
+        {
+            for (int i = 0; i < ammunitionPrefabs.Length; i++) AddAmmunition(ammunitionPrefabs[i]);
         }
 
-        public Ammunition[] ExtractAmmunitionClasses()
+        public int Current => index;
+        public string CurrentAmmunitionName => ammunitionNames[index];
+        public Ammunition CurrentAmmunitionBehavior => ammunitionBehaviors[ammunitionNames[index]];
+        public GameObject CurrentAmmunitionPrefab => ammunitionPrefabs[ammunitionNames[index]];
+
+        public void NextAmmunition()
         {
-            Ammunition[] result = new Ammunition[AmmunitionPrefabs.Count];
-            for (int i = 0; i < AmmunitionPrefabs.Count; i++)
+            if (index == ammunitionNames.Count - 1) index = 0;
+            else index++;
+        }
+
+        public void SelectAmmunition(string ammunitionName)
+        {
+            if (ammunitionNames.Contains(ammunitionName)) index = ammunitionNames.IndexOf(ammunitionName);
+            else throw new System.Exception("Invalid ammunition name");
+        }
+
+        public void SelectAmmunition(int ammunitionIndex)
+        {
+            index = ammunitionIndex;
+        }
+
+        public void AddAmmunition(GameObject ammunitionPrefab)
+        {
+            if (!ammunitionNames.Contains(ammunitionPrefab.name))
             {
-                if (AmmunitionPrefabs[i].TryGetComponent(out Ammunition ammo))
-                {
-                    ammo.Data = new AmmunitionData(AmmunitionPrefabs[i].name);
-                    result[i] = ammo;
-                }
+                ammunitionNames.Add(ammunitionPrefab.name);
+                ammunitionPrefabs.Add(ammunitionPrefab.name, ammunitionPrefab);
+                if (ammunitionPrefab.TryGetComponent(out Ammunition ammunitionBehavior)) ammunitionBehaviors.Add(ammunitionPrefab.name, ammunitionBehavior);
+                else throw new System.Exception("No behavior script found");
             }
-            if (result != null) return result;
-            throw new System.Exception("No ammo founded");
-        }
-
-        public IEnumerator GetEnumerator()
-        {
-            return this;
-        }
-
-        public bool MoveNext()
-        {
-            if (_index == Length - 1)
-            {
-                Reset();
-                return false;
-            }
-            
-            _index++;
-            return true;
-        }
-
-        public void Reset()
-        {
-            _index = 0;
+            else throw new System.Exception("This type of ammo already exists");
         }
     }
 }

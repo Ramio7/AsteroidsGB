@@ -3,28 +3,26 @@ using UnityEngine;
 
 namespace RRRStudyProject.HW6
 {
-    public class JSONData
+    public class JSONData<T>
     {
-        public void Save(TestUnit unit)
+        public readonly string saveDirectoryPath = Path.Combine(Application.dataPath, "Data");
+        public readonly string saveFileName = "JSONData.json";
+
+        public void Save(T data)
         {
-            string FileJSON = JsonUtility.ToJson(unit);
-            File.AppendAllText(Path.Combine(Application.dataPath, $"JSONUnitData.json"), FileJSON);
+            if (!Directory.Exists(saveDirectoryPath)) Directory.CreateDirectory(saveDirectoryPath);
+            string FileJSON = JsonUtility.ToJson(data);
+            File.WriteAllText(Path.Combine(saveDirectoryPath, saveFileName), FileJSON);
         }
 
-        public string Load(string saveDataPath)
+        public T Load(string saveFilePath)
         {
-            if (!File.Exists(saveDataPath))
+            if (!File.Exists(saveFilePath))
             {
                 throw new System.Exception("Save file not found");
             }
-            return File.ReadAllText(saveDataPath);
-        }
-
-        public TestUnit[] ParseData(string JSONstring)
-        {
-            string _jsonPattern = "(unit\\.?)"; //записать правильный паттерн для разделения на строки
-            string[] _tempData = JSONstring.Split('\u002C');
-            return null;
+            string jsonString = File.ReadAllText(saveFilePath);
+            return JsonUtility.FromJson<T>(jsonString);
         }
     }
 }

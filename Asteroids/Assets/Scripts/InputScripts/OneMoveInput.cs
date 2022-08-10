@@ -4,8 +4,9 @@ namespace RRRStudyProject
 {
     public sealed class OneMoveInput : CommandInput
     {
-        public OneMoveInput(string inputTypeName, GameObject controlledObject, Vector2 oneMoveDestination) : base(inputTypeName, controlledObject)
+        public OneMoveInput(GameObject controlledObject, Vector2 oneMoveDestination) : base(controlledObject)
         {
+            inputType = "OneMoveInput";
             destination = oneMoveDestination;
         }
 

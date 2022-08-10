@@ -1,11 +1,11 @@
 namespace RRRStudyProject.HW6
 {
-    public class Mage : TestUnit
+    public sealed class Mage : Unit
     {
-        public Mage(int health)
+        public Mage(int unitHealth)
         {
-            _unitType = "Mage";
-            _unitHealth = health;
+            type = "Mage";
+            health = unitHealth;
         }
     }
 }

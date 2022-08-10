@@ -96,8 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0eb7121faf3b5df42b79f9a22dc4572e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 10
-  _startingEnergy: 2000
+  isActive: 0
+  ammoCooldown: 0.5
+  damage: 10
+  startingEnergy: 3000
 --- !u!50 &4730673925562633830
 Rigidbody2D:
   serializedVersion: 4

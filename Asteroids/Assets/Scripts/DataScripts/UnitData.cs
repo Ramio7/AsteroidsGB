@@ -51,7 +51,7 @@ namespace RRRStudyProject
             unitRotation = unitGameObject.transform.rotation;
 
             collisionDamage = (unitGameObject.TryGetComponent(out Rigidbody2D rigidbody))
-                ? rigidbody.mass * speed
+                ? rigidbody.mass * rigidbody.inertia
                 : 0;
         }
 

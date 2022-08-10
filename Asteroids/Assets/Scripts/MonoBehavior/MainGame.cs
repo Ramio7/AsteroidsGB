@@ -5,8 +5,6 @@ namespace RRRStudyProject
 {
     public class MainGame : MonoBehaviour
     {
-        private GameObjectFactory _factory;
-
         public ListExecuteObject interactiveObjects;
         public GamePrefabs gamePrefabs;
         public UI GameUI;
@@ -16,19 +14,19 @@ namespace RRRStudyProject
 
         public DictionarySurrogated dictionary;
 
+        Factories gameFactories;
+
         void Awake()
         {
             viewServices = new ViewServices();
-            gamePrefabs = FindObjectOfType<GamePrefabs>();
-            _factory = new GameObjectFactory();
+            gameFactories = new Factories();
             interactiveObjects = new ListExecuteObject();
-            if (!FindObjectOfType<Player>())
-            {
-                _factory.CreateGameObject("Player", gamePrefabs.playerShipPrefabs[0]);
-                playerObject = GameObject.FindGameObjectWithTag("Player");
-            }
-            if (!FindObjectOfType<Interceptor>()) _factory.CreateGameObject("Interceptor", gamePrefabs.enemyShipPrefabs[0]);
-            if (!FindObjectOfType<Asteroid>()) _factory.CreateGameObject("Asteroid", gamePrefabs.spaceObjectsPrefabs[0]);
+            gamePrefabs = FindObjectOfType<GamePrefabs>();
+
+            playerObject = gameFactories.unitFactory.CreatePlayerInterceptor(new Vector2(0, 0));
+            gameFactories.unitFactory.CreateInterceptor(GetPlayerData.GenerateObjectStartPosition(), "Enemy");
+            gameFactories.spaceObjectFactory.Create(gamePrefabs.spaceObjectsPrefabs[0], "Asteroid", GetPlayerData.GenerateObjectStartPosition(), Random.Range(10, 1500),
+                Random.Range(0, 150), 0, Random.Range(1, 700));
         }
 
         private void Start()
@@ -39,11 +37,6 @@ namespace RRRStudyProject
 
         void Update()
         {
-            if (!FindObjectOfType<Player>())
-            {
-                _factory.CreateGameObject("Player", gamePrefabs.playerShipPrefabs[0]);
-                playerObject = GameObject.FindGameObjectWithTag("Player");
-            }
             for (int i = 0; i < interactiveObjects.Length; i++)
             {
                 if (interactiveObjects[i] == null)

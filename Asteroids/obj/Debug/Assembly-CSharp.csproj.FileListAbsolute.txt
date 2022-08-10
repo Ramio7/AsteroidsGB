@@ -1,0 +1,2 @@
+D:\AsteroidsGBTutorial\AsteroidsGB\Asteroids\obj\Debug\Assembly-CSharp.csproj.AssemblyReference.cache
+D:\AsteroidsGBTutorial\AsteroidsGB\Asteroids\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache

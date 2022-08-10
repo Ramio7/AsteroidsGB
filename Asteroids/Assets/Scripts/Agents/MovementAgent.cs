@@ -7,9 +7,10 @@ namespace RRRStudyProject
         private readonly GameObject _gameObjectToMove;
         private readonly CommandInput _commandInput;
         private readonly bool _isRigidbody;
-        private readonly Rigidbody2D _rigidbody;
         private float _movingSpeed;
         private float _rotationSpeed;
+
+        public readonly Rigidbody2D rigidbody;
 
         public float MovingSpeed { get => _movingSpeed; set => _movingSpeed = value; }
         public float RotationSpeed { get => _rotationSpeed; set => _rotationSpeed = value; }
@@ -20,31 +21,41 @@ namespace RRRStudyProject
             _movingSpeed = objectData.Speed;
             _rotationSpeed = objectData.RotationSpeed;
             _commandInput = typeOfMovement;
-            _isRigidbody = _gameObjectToMove.TryGetComponent(out Rigidbody2D rigidbody);
-            _rigidbody = rigidbody;
+            _isRigidbody = _gameObjectToMove.TryGetComponent(out Rigidbody2D tempRigidbody);
+            rigidbody = tempRigidbody;
+        }
+
+        public float CalculateCollisionDamage()
+        {
+            if (rigidbody.velocity.magnitude == 0)
+            {
+                return rigidbody.mass * rigidbody.inertia;
+            }
+            return rigidbody.velocity.magnitude * rigidbody.mass * rigidbody.inertia;
         }
 
         public void Move()
         {
             if (_isRigidbody)
             {
-                switch (_commandInput.InputTypeName)
+                switch (_commandInput.inputType)
                 {
                     case "UserInput":
                         {
-                            _rigidbody.AddRelativeForce(_movingSpeed * _commandInput.moveTowards.normalized);
+                            rigidbody.AddRelativeForce(_movingSpeed * _commandInput.moveTowards.normalized);
                             break;
                         }
                     case "AIInput":
                         {
-                            _rigidbody.AddForce(_movingSpeed * Time.deltaTime * _commandInput.moveTowards);
+                            rigidbody.AddForce(_movingSpeed * Time.deltaTime * _commandInput.moveTowards);
                             break;
                         }
                     case "OneMoveInput":
                         {
-                            _rigidbody.AddForce(_movingSpeed * Time.deltaTime * _commandInput.moveTowards);
+                            rigidbody.AddForce(_movingSpeed * Time.deltaTime * _commandInput.moveTowards);
                             break;
                         }
+                    default: throw new System.Exception("Invalid command input type");
                 }
             }
             else

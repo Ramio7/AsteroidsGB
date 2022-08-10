@@ -4,122 +4,77 @@ using Object = UnityEngine.Object;
 
 namespace RRRStudyProject
 {
-    public class DamageAgent : ITakeDamage, IDoDamage, IHeal, IHaveCooldowns //вывести дополнительные методы когда будет время, отрефакторить код. Убрать лишние переменные от 
-        //родительского объекта. Оставить только урон, здоровье и ввести текущее здоровье.
+    public class DamageAgent : ITakeDamage, IDoDamage, IHeal, IHaveCooldowns //закончить рефакторинг
     {
-        private readonly MainGame _mainGame;
-
-        private float _ammoCooldownStart;
-
-        private readonly GamePrefabs _gamePrefabs;
-
         private readonly GameObject _agentInitializer;
+        public float maxHealth;
+        public float currentHealth;
+
         private readonly AmmunitionAgent _ammunitionAgent;
-        private readonly CommandInput _commandInput;
-        private readonly IData _initializerData;
-
-        private readonly Ammunition[] _initializerAmmo;
-        private readonly AmmunitionData[] _initializerAmmoData;
-
-        private readonly IDamageInitializer _agentClass;
+        private float _ammoCooldownStart;
         private readonly Transform _ammoStartTransform;
 
-        public IData InitializerData => _initializerData;
+        private readonly CommandInput _commandInput;
 
         private IViewServices _viewServices;
 
-        //private GameObjectBuilder ammoBuilder = new GameObjectBuilder();
 
         public DamageAgent(GameObject agentInitializer)
         {
-            _mainGame = Object.FindObjectOfType<MainGame>();
-            _gamePrefabs = Object.FindObjectOfType<GamePrefabs>();
-            _ammoStartTransform = agentInitializer.transform.Find("AmmoStartPosition");
             _agentInitializer = agentInitializer;
-            _ammoCooldownStart = Time.time;
-            _viewServices = _mainGame.viewServices;
+            
+            _viewServices = Object.FindObjectOfType<MainGame>().viewServices;
+            if (_viewServices == null) throw new Exception("No ViewServices found on scene");
 
-            if (_agentInitializer.TryGetComponent(out IDamageInitializer _tempAgentClass))
+            if (_agentInitializer.TryGetComponent(out ITakeCommands commandInput))
             {
-                switch (_tempAgentClass.Data.DataType)
-                {
-                    case "Unit":
-                        {
-                            Unit _tempUnit = (Unit)_tempAgentClass;
-                            _agentClass = _tempAgentClass;
-                            _ammunitionAgent = _agentClass.AmmunitionAgent;
-                            _initializerData = (UnitData)_tempAgentClass.Data;
-                            _initializerAmmo = _ammunitionAgent.ExtractAmmunitionClasses();
-                            _initializerAmmoData = ExtractAmmunitionData();
-                            _commandInput = _tempUnit.CommandInput;
-                            break;
-                        }
-                    case "Trap":
-                        {
-                            break;
-                        }
-                    case "SpaceObject":
-                        {
-                            SpaceObject _tempSpaceObject = (SpaceObject)_tempAgentClass;
-                            _agentClass = _tempAgentClass;
-                            _initializerData = (SpaceObjectData)_tempAgentClass.Data;
-                            _commandInput = _tempSpaceObject.CommandInput;
-                            break;
-                        }
-                    default: throw new Exception("Unknown object class");
-                }
+                _commandInput = commandInput.CommandInput;
             }
-            else throw new Exception("DamageInitializer class not found");
+            else throw new Exception("No command input found. Add one, please");
+
+            if (_agentInitializer.TryGetComponent(out IDamageInitializer agentClass))
+            {
+                maxHealth = agentClass.Data.MaxHealth;
+                currentHealth = agentClass.Data.Health;
+            }
+            else throw new Exception("No monobehavior script of damage initializer found");
+
+            if (_agentInitializer.TryGetComponent(out ICarryWeapons objectAmmunition))
+            {
+                _ammunitionAgent = objectAmmunition.AmmunitionAgent;
+                Debug.Log(_ammunitionAgent.Current);
+                if (_ammunitionAgent == null) throw new Exception("No ammunition agent found. Add ammunition agent to object");
+
+                _ammoCooldownStart = Time.time;
+
+                _ammoStartTransform = _agentInitializer.transform.Find("AmmoStartPosition");
+                if (_ammoStartTransform == null) throw new Exception("Add empty 'AmmoStartPosition' to object or object prefab");
+            }
         }
 
         public void Fire()
         {
-            if (!Cooldown(_ammoCooldownStart, 0.5f, out _ammoCooldownStart)) _commandInput.isFiring = false;
-            if (_commandInput.isFiring)
+            if (!_commandInput.weaponLock)
             {
-                int _currentAmmoIndex = _ammunitionAgent.Index;
-                AmmunitionData _tempAmmoData = _initializerAmmoData[_currentAmmoIndex];
-                switch (_tempAmmoData.Name)
-                {
-                    case "Bullet":
-                        {
-                            CreateAmmo(_gamePrefabs.ammunitionPrefabs[0]);
-                            break;
-                        }
-                    case "Rocket":
-                        {
-                            CreateAmmo(_gamePrefabs.ammunitionPrefabs[1]);
-                            break;
-                        }
-                    case "Missile":
-                        {
-                            CreateAmmo(_gamePrefabs.ammunitionPrefabs[2]);
-                            break;
-                        }
-                    case "Torpedo":
-                        {
-                            CreateAmmo(_gamePrefabs.ammunitionPrefabs[3]);
-                            break;
-                        }
-                    default: throw new Exception("No ammo detected");
-                }
+                if (!Cooldown(_ammoCooldownStart, _ammunitionAgent.CurrentAmmunitionBehavior.ammoCooldown, out _ammoCooldownStart)) _commandInput.isFiring = false; 
+                if (_commandInput.isFiring) CreateAmmo(_ammunitionAgent.CurrentAmmunitionPrefab);
             }
         }
 
         public void FireViaPool()
         {
-            if (!Cooldown(_ammoCooldownStart, 0.5f, out _ammoCooldownStart)) _commandInput.isFiring = false;
-            if (_commandInput.isFiring)
+            if (!_commandInput.weaponLock)
             {
-                _viewServices.Instantiate<Rigidbody2D>(_gamePrefabs.ammunitionPrefabs[_ammunitionAgent.Index]);
+                if (!Cooldown(_ammoCooldownStart, _ammunitionAgent.CurrentAmmunitionBehavior.ammoCooldown, out _ammoCooldownStart)) _commandInput.isFiring = false;
+                if (_commandInput.isFiring) _viewServices.Instantiate<Rigidbody2D>(_ammunitionAgent.CurrentAmmunitionPrefab);
             }
         }
 
         public void Hit(float incomingDamage)
-       {
-            _initializerData.Health -= incomingDamage;
+        {
+            currentHealth -= incomingDamage;
 
-            if (_initializerData.Health <= 0)
+            if (currentHealth <= 0)
             {
                 _agentInitializer.SetActive(false);
             }
@@ -127,42 +82,18 @@ namespace RRRStudyProject
 
         public void Heal(float healDamage)
         {
-            _initializerData.Health += healDamage;
+            currentHealth += healDamage;
 
-            if (_initializerData.Health >= _initializerData.MaxHealth)
+            if (currentHealth >= maxHealth)
             {
-                _initializerData.Health = _initializerData.MaxHealth;
+                currentHealth = maxHealth;
             }
         }
 
-        private void CreateAmmo(GameObject ammoPrefab)
+        private GameObject CreateAmmo(GameObject ammoPrefab)
         {
             _commandInput.isFiring = false;
-            Object.Instantiate(ammoPrefab, _ammoStartTransform);
-        }
-
-        //public void CreateAmmoViaObjectBuilder() //учебная функция, волшебные числа для теста работы, для полной работоспособности прикрутить текущие координаты для старта и
-        //    //разобраться с багом (создаётся только одна пуля, возможно: надо создавать билдер для каждой пули отдельно)
-        //{
-        //    _commandInput.isFiring = false;
-        //    GameObject _ammo = ammoBuilder.Physics.BoxCollider2D().Rigidbody2D(0.5f).Visual.Name("Bullet");
-        //    _ammo.AddComponent<Bullet>();
-        //    Rigidbody2D _ammoRigidbody = _ammo.GetComponent<Rigidbody2D>();
-        //    _ammoRigidbody.AddRelativeForce(Vector2.up * 100, ForceMode2D.Impulse);
-        //}
-
-        private AmmunitionData[] ExtractAmmunitionData()
-        {
-            AmmunitionData[] result = new AmmunitionData[_initializerAmmo.Length];
-            for (int i = 0; i < _initializerAmmo.Length; i++)
-            {
-                if (_initializerAmmo[i].Data != null)
-                {
-                    result[i] = (AmmunitionData)_initializerAmmo[i].Data;
-                }
-            }
-            if (result != null) return result;
-            throw new System.Exception("No ammo data founded");
+            return Object.Instantiate(ammoPrefab, _ammoStartTransform);
         }
 
         public bool Cooldown(float cooldownStart, float cooldown, out float newCooldownStart)
