@@ -3,27 +3,25 @@ using Random = UnityEngine.Random;
 
 namespace RRRStudyProject
 {
-    public class AIInput : CommandInput
+    public sealed class AIInput : CommandInput
     {
         public Vector2 _waypoint = new Vector2(0, 0);
+        private Vector2 _playerPosition = GetPlayerData.GetPlayerPosition();
         public float _speed;
         public float _rotationSpeed;
 
-        public AIInput(string inputTypeName, GameObject controlledObject) : base(inputTypeName, controlledObject)
+        public AIInput(GameObject controlledObject) : base(controlledObject)
         {
-            controlledObject.TryGetComponent(out Unit unit);
-            _speed = unit.Data.Speed;
-            _rotationSpeed = unit.Data.RotationSpeed;
+            inputType = "AIInput";
         }
 
         private Vector2 GenerateWaypoint(Transform controlledObjectTransform, Vector2 currentWaypoint)
         {
-            Vector2 _newWaypoint;
-            GetPlayerPosition(out float xCoordinate, out float yCoordinate);
-            if (Vector2.Distance(controlledObjectTransform.position, new Vector2(xCoordinate, yCoordinate)) >= 50f)
+            Vector2 _newWaypoint; 
+            if (Vector2.Distance(controlledObjectTransform.position, _playerPosition) >= 50f)
             {
-                _newWaypoint.x = xCoordinate + Random.Range(-10f, 10f);
-                _newWaypoint.y = yCoordinate + Random.Range(-10f, 10f);
+                _newWaypoint.x = _playerPosition.x + Random.Range(-10f, 10f);
+                _newWaypoint.y = _playerPosition.y + Random.Range(-10f, 10f);
                 return _newWaypoint;
             }
             if (Vector2.Distance(currentWaypoint, controlledObjectTransform.position) <= 3f || Vector2.Distance(currentWaypoint, controlledObjectTransform.position) >= 30f)
@@ -44,13 +42,13 @@ namespace RRRStudyProject
 
         private bool OpenFire(Vector2 controlledObjectPosition)
         {
-            GetPlayerPosition(out float xCoordinate, out float yCoordinate);
-            if (Vector2.Distance(controlledObjectPosition, new Vector2(xCoordinate, yCoordinate)) < 30) return true;
+            if (Vector2.Distance(controlledObjectPosition, _playerPosition) < 30) return true;
             return false;
         }
 
         public override void Update()
         {
+            _playerPosition = GetPlayerData.GetPlayerPosition();
             _waypoint = GenerateWaypoint(controlledObject.transform, _waypoint);
             moveTowards = ThrottleCalculator(controlledObject.transform.position, _waypoint);
             rotationAngle = Vector2.SignedAngle(controlledObject.transform.position, moveTowards);

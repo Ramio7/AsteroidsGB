@@ -148,6 +148,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc5390030fc53c24aaf839e040014ff6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 0
+  ammoCooldown: 7
+  damage: 100
+  startingEnergy: 500
 --- !u!50 &5461206034729241703
 Rigidbody2D:
   serializedVersion: 4

@@ -2,22 +2,19 @@ using UnityEngine;
 
 namespace RRRStudyProject
 {
-    public abstract class Unit : MonoBehaviour, IDamageInitializer
+    public abstract class Unit : MonoBehaviour, IDamageInitializer, ICarryWeapons, ITakeCommands
     {
         //доработать после проектирования фабрики юнитов
+        public string className;
         protected UnitData data;
         protected CommandInput commandInput;
         protected MovementAgent movement;
         protected DamageAgent damageAgent;
         protected AmmunitionAgent unitAmmunition;
-        protected Ammunition currentAmmunition;
-        protected Rigidbody2D tempRigidbody;
 
         public DamageAgent DamageAgent { get => damageAgent; set => damageAgent = value; }
         public IData Data { get => data; set => data = (UnitData)value; }
         public AmmunitionAgent AmmunitionAgent { get => unitAmmunition; set => unitAmmunition = value; }
-        public Ammunition CurrentAmmunition { get => currentAmmunition; set => currentAmmunition = value; }
-        public Rigidbody2D TempRigidbody { get => tempRigidbody; set => tempRigidbody = value; }
         public CommandInput CommandInput { get => commandInput; set => commandInput = value; }
         public MovementAgent Movement { get => movement; set => movement = value; }
 
@@ -33,14 +30,11 @@ namespace RRRStudyProject
             Movement.RotationSpeed = newRotationSpeed;
         }
 
-        protected float CalculateCollisionDamage()
-        {
-            return tempRigidbody.mass * tempRigidbody.velocity.magnitude * data.Speed;
-        }
-
         public abstract void FixedUpdate();
 
-        private void OnCollisionEnter2D(Collision2D collision)
+        public abstract void OnEnable();
+
+        protected void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.TryGetComponent(out IDamageInitializer victim))
             {

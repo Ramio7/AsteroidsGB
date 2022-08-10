@@ -19,9 +19,9 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Game
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 875, y: 542}
+  m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
   m_Maximized: 1
 --- !u!114 &2
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_MinSize: {x: 679, y: 492}
   m_MaxSize: {x: 14002, y: 14042}
   vertical: 0
-  controlID: 114
+  controlID: 80
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 492}
   m_MaxSize: {x: 10001, y: 14042}
   vertical: 1
-  controlID: 115
+  controlID: 85
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_MinSize: {x: 403, y: 221}
   m_MaxSize: {x: 8003, y: 4021}
   vertical: 0
-  controlID: 116
+  controlID: 86
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -407,7 +407,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 62fbffff
+      m_ExpandedIDs: 6486ffffd8ecffff04fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -528,9 +528,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 4.094737, y: 3.5087173, z: -6.571028}
+    m_Target: {x: -93.04945, y: 33.916164, z: -0.030055737}
     speed: 2
-    m_Value: {x: 4.094737, y: 3.5087173, z: -6.571028}
+    m_Value: {x: -93.04945, y: 33.916164, z: -0.030055737}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -581,9 +581,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 79.152664
+    m_Target: 0.5805255
     speed: 2
-    m_Value: 79.152664
+    m_Value: 0.5805255
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -646,22 +646,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/HW6 JSON Parsing
+    - Assets/Scripts/HW6 Proxy
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts/HW6 JSON Parsing
+  - Assets/Scripts/HW6 Proxy
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\AsteroidsGBTutorial\Asteroids
+  m_LastProjectPath: D:\AsteroidsGBTutorial\AsteroidsGB\Asteroids
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 60}
-    m_SelectedIDs: 2a480000
-    m_LastClickedID: 18474
-    m_ExpandedIDs: 00000000fc470000fe47000000480000024800000448000006480000084800000a4800000c4800000e480000104800001248000000ca9a3b
+    scrollPos: {x: 0, y: 80}
+    m_SelectedIDs: bc740000
+    m_LastClickedID: 29884
+    m_ExpandedIDs: 000000003e48000040480000424800004448000046480000484800004a4800004c480000724800007448000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -689,7 +689,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fc470000fe47000000480000024800000448000006480000084800000a4800000c4800000e4800001048000012480000
+    m_ExpandedIDs: 000000003e48000040480000424800004448000046480000484800004a4800004c4800004e480000504800005248000054480000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -716,7 +716,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000784b0000d0a3010060470000000000001c6000002a9601006c5500001a6200001888000026620000ae960000a69600009496000062620000e6900000844300004646000092470000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -797,7 +797,7 @@ MonoBehaviour:
   m_ViewDataDictionary: {fileID: 0}
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 17378
+  m_LastSelectedObjectID: 17448
 --- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52

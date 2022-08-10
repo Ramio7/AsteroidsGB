@@ -1,18 +1,21 @@
-using UnityEngine;
-
 namespace RRRStudyProject
 {
     public sealed class Player : Unit
     {
-        public string className = "Player";
-        public float playerSpeed = 15;
-        public float playerMaxHealth = 100;
-        public float playerRotationSpeed = 6;
+        public Player()
+        {
+            className = "Player";
+        }
+
+        public override void OnEnable()
+        {
+            commandInput = new UserInput(gameObject);
+        }
 
         public override void FixedUpdate()
         {
             movement.Move();
-            Data.Damage = CalculateCollisionDamage();
+            Data.Damage = movement.CalculateCollisionDamage();
             if (CommandInput.isFiring) damageAgent.Fire();
         }
     }

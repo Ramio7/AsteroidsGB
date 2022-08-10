@@ -52,7 +52,7 @@ namespace RRRStudyProject
         {
             if (ammoGameObject.TryGetComponent(out Ammunition dataClass))
             {
-                return dataClass.data;
+                return dataClass.Data;
             }
             return null;
         }
@@ -64,7 +64,7 @@ namespace RRRStudyProject
             AmmunitionData gameObjectData;
             if (ammoGameObject.TryGetComponent(out Ammunition dataClass))
             {
-                gameObjectData = dataClass.data;
+                gameObjectData = (AmmunitionData)dataClass.Data;
                 if (!File.Exists(gameObjectData.savePath)) throw new System.Exception("Data file not found");
                 using var _fileStream = new FileStream(gameObjectData.savePath, FileMode.Open);
                 gameObjectData = (AmmunitionData)_serializer.Deserialize(_fileStream);

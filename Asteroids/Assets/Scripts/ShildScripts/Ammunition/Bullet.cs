@@ -4,25 +4,27 @@ namespace RRRStudyProject
 {
     public class Bullet : Ammunition
     {
-        [SerializeField] private float _damage = 10;
-        [SerializeField] private float _startingEnergy = 100;
-        public Bullet(string ammoType) : base(ammoType) 
+        public Bullet(string ammoType, float ammoCooldown, float startingEnergy, float damage) : base(ammoType, ammoCooldown, startingEnergy, damage)
         {
+            this.damage = damage;
+            this.startingEnergy = startingEnergy;
+            this.ammoCooldown = ammoCooldown;
+            this.ammoType = "Bullet";
         }
 
-        public float Damage { get => _damage; set => _damage = value; }
-        public float StartingEnergy { get => _startingEnergy; set => _startingEnergy = value; }
+        private void OnEnable()
+        {
+            TryGetComponent(out Rigidbody2D rigidbody2D);
+            rigidbody2D.AddRelativeForce(Vector2.up * startingEnergy);
+        }
 
         public override void OnCollisionEnter2D(Collision2D collision)
         {
             if (collision.gameObject.TryGetComponent(out IDamageInitializer victim))
             { 
                 victim.DamageAgent.Hit(data.Damage);
-                gameObject.SetActive(false);
-                return;
             }
             gameObject.SetActive(false);
-            Debug.Log("Didn't dealt any damage");
         }
     }
 }

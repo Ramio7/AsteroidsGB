@@ -4,16 +4,22 @@ namespace RRRStudyProject
 {
     public sealed class Interceptor : Unit
     {
-        public string className = "Interceptor";
-        public float interceptorSpeed = 15;
-        public float interceptorMaxHealth = 100;
-        public float interceptorRotationSpeed = 6;
+        public Interceptor()
+        {
+            className = "Interceptor";
+        }
+
+        public override void OnEnable()
+        {
+            commandInput = new AIInput(gameObject);
+        }
 
         public override void FixedUpdate()
         {
             movement.Move();
-            Data.Damage = CalculateCollisionDamage();
+            Data.Damage = movement.CalculateCollisionDamage();
             if (CommandInput.isFiring) damageAgent.Fire();
         }
+
     }
 }

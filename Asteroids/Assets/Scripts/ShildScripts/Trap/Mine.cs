@@ -4,10 +4,10 @@ namespace RRRStudyProject
 {
     public sealed class Mine : Trap
     {
-        public string className = "Mine";
-        public float mineDamage;
-        public float mineRadiusOfFire;
-        public float mineMaxHealth;
+        public Mine()
+        {
+            
+        }
 
         public override void OnTriggerEnter(Collider other)
         {
@@ -17,7 +17,6 @@ namespace RRRStudyProject
                 gameObject.SetActive(false);
                 return;
             }
-            Debug.Log("Didn't dealt any damage");
         }
     }
 }

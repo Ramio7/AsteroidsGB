@@ -4,12 +4,12 @@ namespace RRRStudyProject
 {
     public class Torpedo : Ammunition
     {
-        private float startingEnergy = 10;
-        public float StartingEnergy { get => startingEnergy; set => startingEnergy = value; }
-
-        public Torpedo(string ammoType) : base(ammoType)
+        public Torpedo(string ammoType, float ammoCooldown, float startingEnergy, float damage) : base(ammoType, ammoCooldown, startingEnergy, damage)
         {
             this.ammoType = "Torpedo";
+            this.ammoCooldown = ammoCooldown;
+            this.startingEnergy = startingEnergy;
+            this.damage = damage;
         }
 
         public override void OnCollisionEnter2D(Collision2D collision)
