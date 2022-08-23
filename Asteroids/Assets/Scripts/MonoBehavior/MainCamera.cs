@@ -1,32 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace RRRStudyProject
 {
-    public class MainCamera : MonoBehaviour
+    public class MainCamera : IExecute
     {
-        MainGame game;
+        GameObject _player;
 
-        Player player;
-        Vector3 playerPosition;
-
-        private void Start()
+        public MainCamera(ListExecuteObject interactiveObjects, GameObject player)
         {
-            game = FindObjectOfType<MainGame>();
-            if (!FindObjectOfType<Player>())
-            {
-                Camera.main.gameObject.transform.position = new Vector3(0, 0, 10);
-                throw new System.Exception("Can't find Player");
-            }
-            player = FindObjectOfType<Player>();
+            interactiveObjects.AddExecuteObj(this);
+            _player = player;
         }
 
-        private void Update()
+        public void Update()
         {
-            playerPosition = player.gameObject.transform.position;
-            transform.position = new Vector3(playerPosition.x, playerPosition.y, -10);
-            if (player == null) player = game.playerObject.GetComponent<Player>();
+            Camera.main.transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y, -10);
         }
     }
 }

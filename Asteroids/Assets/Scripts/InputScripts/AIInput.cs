@@ -6,7 +6,7 @@ namespace RRRStudyProject
     public sealed class AIInput : CommandInput
     {
         public Vector2 _waypoint = new Vector2(0, 0);
-        private Vector2 _playerPosition = GetPlayerData.GetPlayerPosition();
+        private Vector2 _playerPosition;
         public float _speed;
         public float _rotationSpeed;
 

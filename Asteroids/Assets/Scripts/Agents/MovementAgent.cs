@@ -31,7 +31,7 @@ namespace RRRStudyProject
             {
                 return rigidbody.mass * rigidbody.inertia;
             }
-            return rigidbody.velocity.magnitude * rigidbody.mass * rigidbody.inertia;
+            return rigidbody.velocity.magnitude * rigidbody.inertia;
         }
 
         public void Move()

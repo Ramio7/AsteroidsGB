@@ -1,58 +1,87 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace RRRStudyProject
 {
-    public class AmmunitionAgent
+    public class AmmunitionAgent : IDoDamage, IHaveCooldowns
     {
-        public Dictionary<string, GameObject> ammunitionPrefabs = new Dictionary<string, GameObject>();
-        public Dictionary<string, Ammunition> ammunitionBehaviors = new Dictionary<string, Ammunition>();
+        private readonly GameObject _agentInitializer;
 
-        public List<string> ammunitionNames = new List<string>();
+        private float _ammoCooldownStart;
 
-        private int index = 0;
+        private readonly CommandInput _commandInput;
 
-        public AmmunitionAgent(GameObject ammunitionPrefab)
+        private readonly IViewServices _viewServices;
+
+        public AmmunitionFactory ammunitionFactory = new AmmunitionFactory();
+
+        public ListAmmunition ammoList = new ListAmmunition();
+
+        public AmmunitionAgent(GameObject agentInitializer)
         {
-            AddAmmunition(ammunitionPrefab);
-        }
-        public AmmunitionAgent(GameObject[] ammunitionPrefabs)
-        {
-            for (int i = 0; i < ammunitionPrefabs.Length; i++) AddAmmunition(ammunitionPrefabs[i]);
-        }
+            _agentInitializer = agentInitializer;
 
-        public int Current => index;
-        public string CurrentAmmunitionName => ammunitionNames[index];
-        public Ammunition CurrentAmmunitionBehavior => ammunitionBehaviors[ammunitionNames[index]];
-        public GameObject CurrentAmmunitionPrefab => ammunitionPrefabs[ammunitionNames[index]];
+            _viewServices = Object.FindObjectOfType<MainGame>().viewServices;
 
-        public void NextAmmunition()
-        {
-            if (index == ammunitionNames.Count - 1) index = 0;
-            else index++;
-        }
+            if (_viewServices == null) throw new Exception("No ViewServices found on scene");
 
-        public void SelectAmmunition(string ammunitionName)
-        {
-            if (ammunitionNames.Contains(ammunitionName)) index = ammunitionNames.IndexOf(ammunitionName);
-            else throw new System.Exception("Invalid ammunition name");
-        }
-
-        public void SelectAmmunition(int ammunitionIndex)
-        {
-            index = ammunitionIndex;
-        }
-
-        public void AddAmmunition(GameObject ammunitionPrefab)
-        {
-            if (!ammunitionNames.Contains(ammunitionPrefab.name))
+            if (_agentInitializer.TryGetComponent(out ITakeCommands commandInput))
             {
-                ammunitionNames.Add(ammunitionPrefab.name);
-                ammunitionPrefabs.Add(ammunitionPrefab.name, ammunitionPrefab);
-                if (ammunitionPrefab.TryGetComponent(out Ammunition ammunitionBehavior)) ammunitionBehaviors.Add(ammunitionPrefab.name, ammunitionBehavior);
-                else throw new System.Exception("No behavior script found");
+                _commandInput = commandInput.CommandInput;
             }
-            else throw new System.Exception("This type of ammo already exists");
+            else throw new Exception("No command input found. Add one, please");
+
+            ammunitionFactory.ammoStartTransfrom = _agentInitializer.transform.Find("AmmoStartPosition");
+            if (ammunitionFactory.ammoStartTransfrom == null) throw new Exception("Add empty 'AmmoStartPosition' to object or object prefab");
+
+            _ammoCooldownStart = Time.time;
         }
+
+        #region Firing
+
+        public void Fire()
+        {
+            if (!_commandInput.weaponLock)
+            {
+                if (!Cooldown(_ammoCooldownStart, ammoList.CurrentAmmunitionBehavior.ammoCooldown, out _ammoCooldownStart)) _commandInput.isFiring = false; //refactor code with ListAmmunition
+                if (_commandInput.isFiring && ammoList.CurrentAmmunitionAmount > 0)
+                {
+                    switch (ammoList.CurrentAmmunitionBehavior.ammoType)
+                    {
+                        case "Bullet":
+                            ammunitionFactory.CreateBullet();
+                            ammoList.CurrentAmmunitionAmount--;
+                            break;
+                        case "Rocket":
+                            ammunitionFactory.CreateRocket();
+                            ammoList.CurrentAmmunitionAmount--;
+                            break;
+                        case "Missile":
+                            ammunitionFactory.CreateMissile();
+                            ammoList.CurrentAmmunitionAmount--;
+                            break;
+                        case "Torpedo":
+                            ammunitionFactory.CreateTorpedo();
+                            ammoList.CurrentAmmunitionAmount--;
+                            break;
+                        default: throw new ArgumentOutOfRangeException("No such type of ammo in Fire metod. Add new case in switch.");
+                    }
+                    _commandInput.isFiring = false;
+                }
+            }
+        }
+
+        public bool Cooldown(float cooldownStart, float cooldown, out float newCooldownStart)
+        {
+            if (Time.time < cooldownStart + cooldown)
+            {
+                newCooldownStart = cooldownStart;
+                return false;
+            }
+            newCooldownStart = Time.time;
+            return true;
+        }
+        #endregion
     }
 }

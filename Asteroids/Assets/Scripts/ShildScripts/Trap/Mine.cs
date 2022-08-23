@@ -4,11 +4,6 @@ namespace RRRStudyProject
 {
     public sealed class Mine : Trap
     {
-        public Mine()
-        {
-            
-        }
-
         public override void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.TryGetComponent(out IDamageInitializer victim))

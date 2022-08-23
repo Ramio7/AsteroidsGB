@@ -1,35 +1,65 @@
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace RRRStudyProject
 {
     public class UI : IExecute
     {
-        readonly MainGame game = Object.FindObjectOfType<MainGame>();
+        private readonly UserInput _userInput;
 
-        private readonly DamageAgent _playerDamageAgent;
-        private TextMeshPro _HPTextMesh;
-        private Scrollbar _HPScrollBar;
+        public readonly Canvas UICanvas;
 
-        public UI(GameObject playerObject)
+        public Dictionary<string, UILayer> UILayersList = new Dictionary<string, UILayer>();
+
+        public UI(UserInput userInput, UILayer[] UILayers)
         {
-            Player _player = playerObject.GetComponent<Player>();
-            _playerDamageAgent = _player.DamageAgent;
+            _userInput = userInput;
 
-            GameObject _HPTextMeshObject = GameObject.Find("HealthBarText");
-            GameObject _HPScrollBarObject = GameObject.Find("HealthBarVisual");
+            for (int i = 0; i < UILayers.Length; i++)
+            {
+                UILayersList.Add(UILayers[i].UILayerName, UILayers[i]);
+            }
 
-            _HPTextMesh = _HPTextMeshObject.AddComponent<TextMeshPro>();
-            _HPScrollBar = _HPScrollBarObject.GetComponent<Scrollbar>();
-
-            game.interactiveObjects.AddExecuteObj(this);
+            MainGame _mainGame = Object.FindObjectOfType<MainGame>();
+            _mainGame.interactiveObjects.AddExecuteObj(this);
         }
 
         public void Update()
         {
-            _HPScrollBar.size = _playerDamageAgent.currentHealth / _playerDamageAgent.maxHealth;
-            _HPTextMesh.SetText($"Health: {_playerDamageAgent.currentHealth}");
+            if (_userInput.pauseMenu) SetActiveUI("PauseMenu");
+            if (_userInput.mainMenu) SetActiveUI("MainMenu");
+            if (_userInput.inGame) SetActiveUI("GameOverlay");
+        }
+
+        public void SetActiveUI(string UILayerName)
+        {
+            if (!UILayersList.ContainsKey(UILayerName)) throw new System.Exception($"{UILayerName} is not created");
+            ChooseLayerInDictionary(UILayersList[UILayerName]);
+            if (!UILayersList[UILayerName].LayerObject.activeSelf) ActivateLayer(UILayersList[UILayerName]);
+        }
+
+        public void ActivateLayer(UILayer UILayer)
+        {
+            if (UILayer.LayerObject == null) throw new System.Exception($"{UILayer.UILayerName} object is not created");
+            UILayer.LayerObject.SetActive(true);
+        }
+
+        public void DeactivateLayer(UILayer UILayer)
+        {
+            UILayer.LayerObject.SetActive(false);
+        }
+
+        private void ChooseLayerInDictionary(UILayer UILayer)
+        {
+            for (int i = 0; i < UILayersList.Count; i++)
+            {
+                UILayer[] _uILayers = new UILayer[UILayersList.Count];
+                UILayersList.Values.CopyTo(_uILayers, 0);
+                if (UILayer != _uILayers[i])
+                {
+                    DeactivateLayer(UILayersList[_uILayers[i].UILayerName]);
+                }
+            }
         }
     }
 }

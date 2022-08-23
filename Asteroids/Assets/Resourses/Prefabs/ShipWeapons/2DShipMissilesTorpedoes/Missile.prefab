@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4939776514575168}
   - component: {fileID: 212906047116171370}
   - component: {fileID: 60203687728882170}
-  - component: {fileID: -1339504732314782021}
   - component: {fileID: -8775532584592899103}
   m_Layer: 0
   m_Name: Missile
@@ -126,22 +125,6 @@ PolygonCollider2D:
       - {x: 0.195, y: -1.665}
       - {x: 0.205, y: -1.155}
       - {x: 0.36499998, y: -1.125}
---- !u!114 &-1339504732314782021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1230325184218856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 317fffdbdaa14504daf41bd4fa8dc7e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 0
-  ammoCooldown: 3
-  damage: 50
-  startingEnergy: 1000
 --- !u!50 &-8775532584592899103
 Rigidbody2D:
   serializedVersion: 4

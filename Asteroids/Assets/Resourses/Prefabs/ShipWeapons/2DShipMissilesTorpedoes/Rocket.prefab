@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4408650874289210}
   - component: {fileID: 212389720134373278}
   - component: {fileID: 60579453460912256}
-  - component: {fileID: -5994931783477774212}
   - component: {fileID: 1408484936917600973}
   m_Layer: 0
   m_Name: Rocket
@@ -120,22 +119,6 @@ PolygonCollider2D:
       - {x: 0.185, y: -0.98499995}
       - {x: 0.185, y: -0.565}
       - {x: 0.145, y: 0.835}
---- !u!114 &-5994931783477774212
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1490768108874216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83ee037191a0f5e49888dde4b1d9e800, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 0
-  ammoCooldown: 2
-  damage: 30
-  startingEnergy: 2000
 --- !u!50 &1408484936917600973
 Rigidbody2D:
   serializedVersion: 4
