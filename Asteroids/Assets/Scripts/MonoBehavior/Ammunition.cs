@@ -4,34 +4,28 @@ namespace RRRStudyProject
 {
     public abstract class Ammunition : MonoBehaviour
     {
-        protected string ammoType;
+        public string ammoType;
 
-        protected int ammoAmount;
+        protected float ammoLifeTime; //inject all class fields in Data
+        protected float ammoDestroyTime;
 
-        protected float ammoLifeTime;
-
-        protected AmmunitionData data;
+        public AmmunitionData data;
 
         public float ammoCooldown;
-        public float damage;
-        public float startingEnergy;
-
-        protected Ammunition(string ammoType, float ammoCooldown, float startingEnergy, float damage)
-        {
-            this.ammoType = ammoType;
-            this.ammoCooldown = ammoCooldown;
-            this.startingEnergy = startingEnergy;
-            this.damage = damage;
-            data = new AmmunitionData(ammoType);
-        }
+        public int ammoAmountBonus; //Add ingame bonuses for ammo amount in future
 
         public IData Data { get => data; set => data = (AmmunitionData)value; }
 
-        public abstract void OnCollisionEnter2D(Collision2D collision);
+        public abstract void OnTriggerEnter2D(Collider2D collision);
 
-        public void Start() //внести отправку в пул после деактивации пули
+        public void Start()
         {
-            
+            ammoDestroyTime = Time.time + ammoLifeTime;
+        }
+
+        public void Update()
+        {
+            if (Time.time > ammoDestroyTime) gameObject.SetActive(false);
         }
     }
 }

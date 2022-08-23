@@ -4,13 +4,9 @@ namespace RRRStudyProject
 {
     public sealed class Interceptor : Unit
     {
-        public Interceptor()
-        {
-            className = "Interceptor";
-        }
-
         public override void OnEnable()
         {
+            className = "Interceptor";
             commandInput = new AIInput(gameObject);
         }
 
@@ -18,8 +14,7 @@ namespace RRRStudyProject
         {
             movement.Move();
             Data.Damage = movement.CalculateCollisionDamage();
-            if (CommandInput.isFiring) damageAgent.Fire();
+            if (CommandInput.isFiring) unitAmmunition.Fire();
         }
-
     }
 }

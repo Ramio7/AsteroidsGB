@@ -6,10 +6,11 @@ namespace RRRStudyProject
     {
         protected TrapData data;
         protected DamageAgent damageAgent;
+        protected AmmunitionAgent trapAmmunition;
 
         public DamageAgent DamageAgent { get => damageAgent; set => damageAgent = value; }
         public IData Data { get => data; set => data = (TrapData)value; }
-        public AmmunitionAgent AmmunitionAgent { get => null; set { } }
+        public AmmunitionAgent AmmunitionAgent { get => trapAmmunition; set => trapAmmunition = value; }
 
         public abstract void OnTriggerEnter(Collider other);
 

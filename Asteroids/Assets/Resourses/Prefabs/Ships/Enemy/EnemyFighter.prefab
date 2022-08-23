@@ -126,7 +126,6 @@ GameObject:
   m_Component:
   - component: {fileID: 349028842934622226}
   - component: {fileID: 443812263582493288}
-  - component: {fileID: 291776106261202824}
   m_Layer: 0
   m_Name: 2DFighterCanon (1)
   m_TagString: Untagged
@@ -199,58 +198,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &291776106261202824
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 350347466200456500}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.72, y: 3.88}
-    newSize: {x: 0.72, y: 3.88}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.29, y: -0.93}
-      - {x: 0.29999998, y: -0.17999999}
-      - {x: 0.22, y: -0.14999999}
-      - {x: 0.21, y: 0.13}
-      - {x: 0.22, y: 0.52}
-      - {x: 0.19999999, y: 1.0699999}
-      - {x: 0.26, y: 1.14}
-      - {x: 0.26, y: 1.74}
-      - {x: 0.19999999, y: 1.9}
-      - {x: 0.17999999, y: 1.9399999}
-      - {x: -0.16, y: 1.9399999}
-      - {x: -0.17, y: 1.91}
-      - {x: -0.24, y: 1.7199999}
-      - {x: -0.22999999, y: 1.6999999}
-      - {x: -0.22, y: 1.15}
-      - {x: -0.17999999, y: 1.06}
-      - {x: -0.17999999, y: -0.17}
-      - {x: -0.24, y: -0.17999999}
-      - {x: -0.26, y: -0.19999999}
-      - {x: -0.26, y: -0.78}
-      - {x: -0.29, y: -0.78}
-      - {x: -0.28, y: -0.95}
-      - {x: -0.35, y: -1.17}
-      - {x: -0.35, y: -1.9399999}
-      - {x: 0.35999998, y: -1.9399999}
-      - {x: 0.35999998, y: -1.13}
-      - {x: 0.31, y: -0.96999997}
 --- !u!1 &350638115891639238
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +208,6 @@ GameObject:
   m_Component:
   - component: {fileID: 345074142533086822}
   - component: {fileID: 445249122730085162}
-  - component: {fileID: 291843005216169666}
   m_Layer: 0
   m_Name: 2DFighterMinigun
   m_TagString: Untagged
@@ -334,65 +280,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &291843005216169666
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 350638115891639238}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.84, y: 2.97}
-    newSize: {x: 0.84, y: 2.97}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.26999998, y: -0.435}
-      - {x: 0.24, y: -0.39499998}
-      - {x: 0.24, y: 0.53499997}
-      - {x: 0.26999998, y: 0.78499997}
-      - {x: 0.28, y: 1.4449999}
-      - {x: 0.22999999, y: 1.485}
-      - {x: -0.29999998, y: 1.485}
-      - {x: -0.35, y: 1.435}
-      - {x: -0.35, y: 0.91499996}
-      - {x: -0.32999998, y: 0.775}
-      - {x: -0.29999998, y: 0.72499996}
-      - {x: -0.29999998, y: -0.375}
-      - {x: -0.32999998, y: -0.445}
-      - {x: -0.31, y: -0.755}
-      - {x: -0.42, y: -0.755}
-      - {x: -0.42, y: -1.485}
-      - {x: 0.42, y: -1.485}
-      - {x: 0.42, y: -0.755}
-      - {x: 0.22999999, y: -0.755}
-    - - {x: -0.03, y: -0.475}
-      - {x: -0.04, y: -0.475}
-      - {x: -0.04, y: -0.745}
-      - {x: -0.03, y: -0.745}
-    - - {x: -0.03, y: 0.73499995}
-      - {x: -0.04, y: 0.73499995}
-      - {x: -0.04, y: -0.405}
-      - {x: -0.03, y: -0.405}
-    - - {x: -0.03, y: 0.885}
-      - {x: -0.04, y: 0.885}
-      - {x: -0.04, y: 0.815}
-      - {x: -0.03, y: 0.815}
-    - - {x: -0.03, y: 0.995}
-      - {x: -0.04, y: 0.955}
-      - {x: -0.03, y: 0.945}
 --- !u!1 &351037665057345832
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,7 +598,6 @@ GameObject:
   m_Component:
   - component: {fileID: 344661339863700060}
   - component: {fileID: 444460435345963546}
-  - component: {fileID: 292613008883102158}
   m_Layer: 0
   m_Name: 2DFighterMinigun (1)
   m_TagString: Untagged
@@ -784,65 +670,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &292613008883102158
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351178004526469666}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.84, y: 2.97}
-    newSize: {x: 0.84, y: 2.97}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.26999998, y: -0.435}
-      - {x: 0.24, y: -0.39499998}
-      - {x: 0.24, y: 0.53499997}
-      - {x: 0.26999998, y: 0.78499997}
-      - {x: 0.28, y: 1.4449999}
-      - {x: 0.22999999, y: 1.485}
-      - {x: -0.29999998, y: 1.485}
-      - {x: -0.35, y: 1.435}
-      - {x: -0.35, y: 0.91499996}
-      - {x: -0.32999998, y: 0.775}
-      - {x: -0.29999998, y: 0.72499996}
-      - {x: -0.29999998, y: -0.375}
-      - {x: -0.32999998, y: -0.445}
-      - {x: -0.31, y: -0.755}
-      - {x: -0.42, y: -0.755}
-      - {x: -0.42, y: -1.485}
-      - {x: 0.42, y: -1.485}
-      - {x: 0.42, y: -0.755}
-      - {x: 0.22999999, y: -0.755}
-    - - {x: -0.03, y: -0.475}
-      - {x: -0.04, y: -0.475}
-      - {x: -0.04, y: -0.745}
-      - {x: -0.03, y: -0.745}
-    - - {x: -0.03, y: 0.73499995}
-      - {x: -0.04, y: 0.73499995}
-      - {x: -0.04, y: -0.405}
-      - {x: -0.03, y: -0.405}
-    - - {x: -0.03, y: 0.885}
-      - {x: -0.04, y: 0.885}
-      - {x: -0.04, y: 0.815}
-      - {x: -0.03, y: 0.815}
-    - - {x: -0.03, y: 0.995}
-      - {x: -0.04, y: 0.955}
-      - {x: -0.03, y: 0.945}
 --- !u!1 &351255843235842558
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +680,6 @@ GameObject:
   m_Component:
   - component: {fileID: 344619010198251486}
   - component: {fileID: 444250301904514114}
-  - component: {fileID: 291824915136081786}
   m_Layer: 0
   m_Name: 2DFighterCanon
   m_TagString: Untagged
@@ -926,58 +752,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!60 &291824915136081786
-PolygonCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 351255843235842558}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.72, y: 3.88}
-    newSize: {x: 0.72, y: 3.88}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: 0.29, y: -0.93}
-      - {x: 0.29999998, y: -0.17999999}
-      - {x: 0.22, y: -0.14999999}
-      - {x: 0.21, y: 0.13}
-      - {x: 0.22, y: 0.52}
-      - {x: 0.19999999, y: 1.0699999}
-      - {x: 0.26, y: 1.14}
-      - {x: 0.26, y: 1.74}
-      - {x: 0.19999999, y: 1.9}
-      - {x: 0.17999999, y: 1.9399999}
-      - {x: -0.16, y: 1.9399999}
-      - {x: -0.17, y: 1.91}
-      - {x: -0.24, y: 1.7199999}
-      - {x: -0.22999999, y: 1.6999999}
-      - {x: -0.22, y: 1.15}
-      - {x: -0.17999999, y: 1.06}
-      - {x: -0.17999999, y: -0.17}
-      - {x: -0.24, y: -0.17999999}
-      - {x: -0.26, y: -0.19999999}
-      - {x: -0.26, y: -0.78}
-      - {x: -0.29, y: -0.78}
-      - {x: -0.28, y: -0.95}
-      - {x: -0.35, y: -1.17}
-      - {x: -0.35, y: -1.9399999}
-      - {x: 0.35999998, y: -1.9399999}
-      - {x: 0.35999998, y: -1.13}
-      - {x: 0.31, y: -0.96999997}
 --- !u!1 &7254070633445743922
 GameObject:
   m_ObjectHideFlags: 0

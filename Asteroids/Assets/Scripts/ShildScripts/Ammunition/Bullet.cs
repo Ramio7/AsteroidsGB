@@ -4,26 +4,17 @@ namespace RRRStudyProject
 {
     public class Bullet : Ammunition
     {
-        public Bullet(string ammoType, float ammoCooldown, float startingEnergy, float damage) : base(ammoType, ammoCooldown, startingEnergy, damage)
-        {
-            this.damage = damage;
-            this.startingEnergy = startingEnergy;
-            this.ammoCooldown = ammoCooldown;
-            this.ammoType = "Bullet";
-        }
-
         private void OnEnable()
         {
-            TryGetComponent(out Rigidbody2D rigidbody2D);
-            rigidbody2D.AddRelativeForce(Vector2.up * startingEnergy);
+            ammoType = "Bullet";
+            ammoLifeTime = 5.0f;
+            ammoCooldown = 0.5f;
+            ammoAmountBonus = 50;
         }
 
-        public override void OnCollisionEnter2D(Collision2D collision)
+        public override void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.gameObject.TryGetComponent(out IDamageInitializer victim))
-            { 
-                victim.DamageAgent.Hit(data.Damage);
-            }
+            if (collision.gameObject.TryGetComponent(out IDamageInitializer victim)) victim.DamageAgent.Hit(data.Damage);
             gameObject.SetActive(false);
         }
     }

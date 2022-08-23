@@ -4,17 +4,21 @@ namespace RRRStudyProject
 {
     public class Missile : Ammunition
     {
-        public Missile(string ammoType, float ammoCooldown, float startingEnergy, float damage) : base(ammoType, ammoCooldown, startingEnergy, damage)
+        private void OnEnable()
         {
-            this.ammoType = "Missile";
-            this.ammoCooldown = ammoCooldown;
-            this.startingEnergy = startingEnergy;
-            this.damage = damage;
+            ammoLifeTime = 15.0f;
+            ammoType = "Missile";
+            ammoCooldown = 1.5f;
+            ammoAmountBonus = 10;
         }
 
-        public override void OnCollisionEnter2D(Collision2D collision)
+        public override void OnTriggerEnter2D(Collider2D collision)
         {
-            
+            if (collision.gameObject.TryGetComponent(out IDamageInitializer victim))
+            {
+                victim.DamageAgent.Hit(data.Damage);
+            }
+            gameObject.SetActive(false);
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace RRRStudyProject
@@ -20,10 +21,11 @@ namespace RRRStudyProject
 
         protected override void AddPhysics(GameObject gameObject, float mass)
         {
+            if (!gameObject.TryGetComponent(out Collider2D _)) _ = gameObject.AddComponent<PolygonCollider2D>();
+            
             if (!gameObject.TryGetComponent(out Rigidbody2D tempRigidbody)) tempRigidbody = gameObject.AddComponent<Rigidbody2D>();
             tempRigidbody.useAutoMass = true;
             tempRigidbody.gravityScale = 0;
-            if (!gameObject.GetComponentInChildren<Collider2D>()) gameObject.AddComponent<PolygonCollider2D>();
         }
 
         protected override Unit AddBehaviorScript(GameObject scriptRecipient, string objectType)
@@ -39,9 +41,17 @@ namespace RRRStudyProject
         protected override void InitializeData(GameObject dataInitializer, Unit behaiviorScript, float unitMaxHealth, float unitSpeed, float unitRotationSpeed)
         {
             behaiviorScript.Data = new UnitData(behaiviorScript.className, unitMaxHealth, unitSpeed, unitRotationSpeed, dataInitializer);
-            behaiviorScript.AmmunitionAgent = new AmmunitionAgent(_gamePrefabs.ammunitionPrefabs[0]);
+            behaiviorScript.AmmunitionAgent = new AmmunitionAgent(dataInitializer);
             behaiviorScript.DamageAgent = new DamageAgent(dataInitializer);
             behaiviorScript.Movement = new MovementAgent(dataInitializer, behaiviorScript.Data, behaiviorScript.CommandInput);
+            List<IAbility> abilities = new List<IAbility>
+            {
+                new Ability("Repair", 30, Target.Self, DamageType.Heal),
+                new Ability("Rocket Barage", 210, Target.MultiObject, DamageType.Explosive),
+                new Ability("Gravitational collapse", 50, Target.Area, DamageType.Kinetic),
+                new Ability("Focus Fire", 200, Target.SingleObject, DamageType.Thermal),
+            };
+            behaiviorScript.Abilities = new ListAbility(abilities, behaiviorScript.CommandInput);
         }
 
         public GameObject CreatePlayerInterceptor(Vector2 playerStartPosition)
@@ -53,6 +63,8 @@ namespace RRRStudyProject
             Player playerScript = (Player)AddBehaviorScript(player, "Player");
 
             InitializeData(player, playerScript, 100, 30, 10);
+
+            player.AddComponent<TimeBody>();
 
             return player;
         }
@@ -67,6 +79,8 @@ namespace RRRStudyProject
 
             InitializeData(player, playerScript, 175, 20, 8);
 
+            player.AddComponent<TimeBody>();
+
             return player;
         }
 
@@ -79,6 +93,8 @@ namespace RRRStudyProject
             Player playerScript = (Player)AddBehaviorScript(player, "Player");
 
             InitializeData(player, playerScript, 400, 7.5f, 3);
+
+            player.AddComponent<TimeBody>();
 
             return player;
         }

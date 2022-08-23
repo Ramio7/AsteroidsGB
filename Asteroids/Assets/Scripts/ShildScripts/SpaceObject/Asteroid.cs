@@ -4,13 +4,9 @@ namespace RRRStudyProject
 {
     public sealed class Asteroid : SpaceObject //Доработать движение
     {
-        public Asteroid()
-        {
-            className = "Asteroid";
-        }
-
         public override void OnEnable()
         {
+            className = "Asteroid";
             commandInput = new OneMoveInput(gameObject, GetPlayerData.GenerateWaypointNearPlayer());
         }
 

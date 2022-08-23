@@ -12,5 +12,7 @@ namespace RRRStudyProject
         public GameObject[] ammunitionPrefabs;
 
         public GameObject[] spaceObjectsPrefabs;
+
+        public GameObject[] layers;
     }
 }

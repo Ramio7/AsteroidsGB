@@ -2,21 +2,20 @@ namespace RRRStudyProject
 {
     public sealed class Player : Unit
     {
-        public Player()
-        {
-            className = "Player";
-        }
+        public string playerName = "Default";
 
         public override void OnEnable()
         {
-            commandInput = new UserInput(gameObject);
+            className = "Player";
+            MainGame mainGame = FindObjectOfType<MainGame>();
+            commandInput = mainGame.userInput;
         }
 
         public override void FixedUpdate()
         {
             movement.Move();
             Data.Damage = movement.CalculateCollisionDamage();
-            if (CommandInput.isFiring) damageAgent.Fire();
+            if (CommandInput.isFiring) unitAmmunition.Fire();
         }
     }
 }

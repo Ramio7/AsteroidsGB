@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 4750834759906328}
   - component: {fileID: 212697552582160056}
   - component: {fileID: 60827822140302670}
-  - component: {fileID: 7661667697199611}
   - component: {fileID: 5461206034729241703}
   m_Layer: 0
   m_Name: Torpedo
@@ -136,22 +135,6 @@ PolygonCollider2D:
       - {x: 0.375, y: -2.305}
       - {x: 0.36499998, y: -2.185}
       - {x: 0.505, y: -2.115}
---- !u!114 &7661667697199611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1084890406425518}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc5390030fc53c24aaf839e040014ff6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 0
-  ammoCooldown: 7
-  damage: 100
-  startingEnergy: 500
 --- !u!50 &5461206034729241703
 Rigidbody2D:
   serializedVersion: 4
