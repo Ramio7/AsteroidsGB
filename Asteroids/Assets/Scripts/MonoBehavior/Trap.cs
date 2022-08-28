@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RRRStudyProject
 {
-    public abstract class Trap : MonoBehaviour, IDamageInitializer
+    public abstract class Trap : MonoBehaviour, IDamageInitializer, IGameObject
     {
         protected TrapData data;
         protected DamageAgent damageAgent;

@@ -56,5 +56,14 @@ namespace RRRStudyProject
         {
             return GetEnumerator();
         }
+
+        public IExecute GetExecute(string className)
+        {
+            foreach (IExecute execute in _interactiveObjects)
+            {
+                if (execute.GetType().Name == className) return execute;
+            }
+            throw new Exception("No such execute in list");
+        }
     }
 }
