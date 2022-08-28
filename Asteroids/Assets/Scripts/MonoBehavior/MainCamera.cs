@@ -4,11 +4,11 @@ namespace RRRStudyProject
 {
     public class MainCamera : IExecute
     {
-        GameObject _player;
+        readonly GameObject _player;
 
-        public MainCamera(ListExecuteObject interactiveObjects, GameObject player)
+        public MainCamera(GameObject player)
         {
-            interactiveObjects.AddExecuteObj(this);
+            Object.FindObjectOfType<MainGame>().interactiveObjects.AddExecuteObj(this);
             _player = player;
         }
 

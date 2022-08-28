@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace RRRStudyProject
@@ -7,10 +6,13 @@ namespace RRRStudyProject
     public class DamageAgent : ITakeDamage, IHeal
     {
         private readonly GameObject _agentInitializer;
+        private int _pointsForObjectDestroy;
+
         public float maxHealth;
         public float currentHealth;
 
-        event Action<MessagePayload<DamageAgent>> ObjectDestroyed = delegate (MessagePayload<DamageAgent> message) { };
+        public event Action<int> ObjectDestroyed = delegate (int points) { };
+        public event Action<string> DestroyedObjectInfo = delegate (string name) { };
 
         public DamageAgent(GameObject agentInitializer)
         {
@@ -22,6 +24,16 @@ namespace RRRStudyProject
                 currentHealth = agentClass.Data.Health;
             }
             else throw new Exception("No monobehavior script of damage initializer found");
+
+            _pointsForObjectDestroy = (int)maxHealth * 10;
+            
+            if (agentClass.GetType().Name != "Player")
+            {
+                ScoreBar scoreBar = (ScoreBar)UnityEngine.Object.FindObjectOfType<MainGame>().interactiveObjects.GetExecute("ScoreBar");
+                ObjectDestroyed += scoreBar.AddScore;
+                MessageBar messageBar = (MessageBar)UnityEngine.Object.FindObjectOfType<MainGame>().interactiveObjects.GetExecute("MessageBar");
+                DestroyedObjectInfo += messageBar.ObjectDestroyed;
+            }
         }
 
         public void Hit(float incomingDamage)
@@ -30,7 +42,8 @@ namespace RRRStudyProject
             if (currentHealth <= 0)
             {
                 _agentInitializer.SetActive(false);
-                ObjectDestroyed.Invoke(new MessagePayload<DamageAgent>(this, _agentInitializer));
+                ObjectDestroyed.Invoke(_pointsForObjectDestroy);
+                DestroyedObjectInfo.Invoke(_agentInitializer.name);
             }
         }
 

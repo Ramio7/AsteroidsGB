@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.SearchService;
 using UnityEngine;
 
 namespace RRRStudyProject
@@ -8,12 +7,6 @@ namespace RRRStudyProject
     public sealed class UserInput : CommandInput
     {
         readonly Camera _camera = Camera.main;
-
-        #region UserInputStates
-
-
-
-        #endregion
 
         #region KeyCommands
 
@@ -24,6 +17,7 @@ namespace RRRStudyProject
         [SerializeField] KeyCommand lockWeapons = new KeyCommand(KeyCode.L);
         [SerializeField] KeyCommand pauseGame = new KeyCommand(KeyCode.P);
         [SerializeField] KeyCommand resumeGame = new KeyCommand(KeyCode.R);
+        [SerializeField] KeyCommand speedBoost = new KeyCommand(KeyCode.LeftShift);
 
         #endregion
 
@@ -46,6 +40,11 @@ namespace RRRStudyProject
                     Time.timeScale = 0.0f;
                     pauseMenu = true;
                     inGame = false;
+                }
+
+                if (speedBoost.Key)
+                {
+
                 }
             }
             if (pauseMenu)

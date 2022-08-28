@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 
 namespace RRRStudyProject
@@ -39,17 +40,24 @@ namespace RRRStudyProject
             };
             GameUI = new UI(userInput, uILayers);
 
+
             for (int i = 0; i < 10; i++)
             {
-                gameFactories.unitFactory.CreateInterceptor(GetPlayerData.GenerateObjectStartPosition(), "Enemy");
-                gameFactories.spaceObjectFactory.Create(gamePrefabs.spaceObjectsPrefabs[0], "Asteroid", GetPlayerData.GenerateObjectStartPosition(), Random.Range(10, 1500),
+                GameObject newInterceptor = gameFactories.unitFactory.CreateInterceptor(GetPlayerData.GenerateObjectStartPosition(), "Enemy");
+                GameObject newAsteroid = gameFactories.spaceObjectFactory.Create(gamePrefabs.spaceObjectsPrefabs[0], "Asteroid", GetPlayerData.GenerateObjectStartPosition(), Random.Range(10, 1500),
                     Random.Range(0, 150), 0, Random.Range(1, 700));
+
+                gameFactories.unitFactory.LogCreatedObject(newInterceptor);
+                gameFactories.spaceObjectFactory.LogCreatedObject(newAsteroid);
+
+                gameOverlay.messageBar.LogCreatedObject(newInterceptor);
+                gameOverlay.messageBar.LogCreatedObject(newAsteroid);
             }
         }
 
         private void Start()
         {
-            new MainCamera(interactiveObjects, playerObject);
+            new MainCamera(playerObject);
             var root = new Modifier(player);
             root.Add(new DamageModifier(player, 10));
             root.Add(new HealthModifier(player, 200));

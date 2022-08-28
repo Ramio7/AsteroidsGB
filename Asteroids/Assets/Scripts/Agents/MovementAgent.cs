@@ -34,6 +34,11 @@ namespace RRRStudyProject
             return rigidbody.velocity.magnitude * rigidbody.inertia;
         }
 
+        public void MoveViaStateMashine()
+        {
+
+        }
+
         public void Move()
         {
             if (_isRigidbody)

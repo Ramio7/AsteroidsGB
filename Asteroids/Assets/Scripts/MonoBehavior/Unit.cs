@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace RRRStudyProject
 {
-    public abstract class Unit : MonoBehaviour, IDamageInitializer, ICarryWeapons, ITakeCommands
+    public abstract class Unit : MonoBehaviour, IDamageInitializer, ICarryWeapons, ITakeCommands, IGameObject
     {
         public string className;
         protected UnitData data;
